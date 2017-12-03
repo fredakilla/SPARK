@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -22,6 +22,9 @@
 #ifndef H_SPK_ACTION
 #define H_SPK_ACTION
 
+#include "IO/SPK_IO_Descriptor.h"
+//#include "Core/SPK_Object.h"
+
 namespace SPK
 {
 	class Particle;
@@ -36,6 +39,11 @@ namespace SPK
 	*/
 	class Action : public SPKObject
 	{
+	SPK_START_DESCRIPTION
+	SPK_PARENT_ATTRIBUTES(SPKObject)
+	SPK_ATTRIBUTE("active",ATTRIBUTE_TYPE_BOOL)
+	SPK_END_DESCRIPTION
+
 	public :
 
 		virtual ~Action() {}
@@ -59,16 +67,15 @@ namespace SPK
 		*/
 		virtual void apply(Particle& particle) const = 0;
 
-	public :
-		spark_description(Action, SPKObject)
-		(
-			spk_attribute(bool, active, setActive, isActive);
-		);
-
-	protected :	
+	protected :
+	
 		Action();
 
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
+
 	private :
+
 		bool active;
 	};
 
@@ -84,6 +91,21 @@ namespace SPK
 	inline bool Action::isActive() const
 	{
 		return active;
+	}
+
+	inline void Action::innerImport(const IO::Descriptor& descriptor)
+	{
+		SPKObject::innerImport(descriptor);
+
+		const IO::Attribute* attrib = NULL;
+        if ((attrib = descriptor.getAttributeWithValue("active")))
+			setActive(attrib->getValue<bool>());
+	}
+
+	inline void Action::innerExport(IO::Descriptor& descriptor) const
+	{
+		SPKObject::innerExport(descriptor);
+		descriptor.getAttribute("active")->setValueOptionalOnTrue(isActive());
 	}
 }
 

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -49,6 +49,13 @@ namespace SPK
 	*/
 	class SPK_PREFIX Collider : public Modifier
 	{
+	SPK_IMPLEMENT_OBJECT(Collider)
+
+	SPK_START_DESCRIPTION
+	SPK_PARENT_ATTRIBUTES(Modifier)
+	SPK_ATTRIBUTE("elasticity",ATTRIBUTE_TYPE_FLOAT)
+	SPK_END_DESCRIPTION
+
 	public :
 
 		/////////////////
@@ -81,11 +88,10 @@ namespace SPK
 		*/
 		float getElasticity() const;
 
-	public :
-		spark_description(Collider, Modifier)
-		(
-			spk_attribute(float, elasticity, setElasticity, getElasticity);
-		);
+	protected :
+
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
 
 	private :
 

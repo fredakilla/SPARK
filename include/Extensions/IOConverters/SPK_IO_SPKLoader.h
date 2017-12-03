@@ -1,8 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 :                                                    //
-//  - Julien Fryer - julienfryer@gmail.com				                        //
-//  - Thibault Lescoat - info-tibo@orange.fr                                    //
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -24,33 +22,41 @@
 #ifndef H_SPK_IO_SPKLOADER
 #define H_SPK_IO_SPKLOADER
 
-#include "SPK_IO_SPKCommon.h"
-
 namespace SPK
 {
 namespace IO
 {
-	class SPKDeserializer;
-	struct SPKHelper;
-
 	/** @brief A class to deserialize a System from a spk format stream */
 	class SPK_PREFIX SPKLoader : public Loader
 	{
-	public:
-		Ref<System> load(std::istream& is);
+	private :
 
-	private:
-		friend class SPKDeserializer;
-		friend struct SPKHelper;
-		struct LoadContext;
-		template<typename T> struct ValueLoader;
+		static const char MAGIC_NUMBER[3];
+		static const char VERSION;
 
-		void parseObjectList(LoadContext& context, unsigned int nbObjects);
-		void parseConnection(LoadContext& context);
-		void parseObject(LoadContext& context);
-		void skipValue(LoadContext& context);
+		static const size_t DATA_LENGTH_OFFSET;
+		static const size_t HEADER_LENGTH;
+
+        virtual bool innerLoad(std::istream& is,Graph& graph,const std::string& path=0) const;
+
+		bool readObject(Node& node,const Graph& graph,const IOBuffer& data) const;
+		bool readAttribute(Attribute& attrib,const Graph& graph,const IOBuffer& data) const;
+		Ref<SPKObject> readReference(const Graph& graph,const IOBuffer& data) const;
+
+		template<class T>
+		void setAttributeValues(Attribute& attrib,const IOBuffer& data) const;
 	};
-}
-}
+
+	template<class T>
+	void SPKLoader::setAttributeValues(Attribute& attrib,const IOBuffer& data) const
+	{
+		size_t nbValues = data.get<uint32>();
+		T* buffer = SPK_NEW_ARRAY(T,nbValues);
+		for (size_t i = 0; i < nbValues; ++i)
+			buffer[i] = data.get<T>();
+		attrib.setValues(buffer,nbValues);
+		SPK_DELETE_ARRAY(buffer);
+	}
+}}
 
 #endif

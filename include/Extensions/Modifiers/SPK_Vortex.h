@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -48,6 +48,20 @@ namespace SPK
 	*/
 	class SPK_PREFIX Vortex : public Modifier
 	{
+	SPK_IMPLEMENT_OBJECT(Vortex)
+
+	SPK_START_DESCRIPTION
+	SPK_PARENT_ATTRIBUTES(Modifier)
+	SPK_ATTRIBUTE("position",ATTRIBUTE_TYPE_VECTOR)
+	SPK_ATTRIBUTE("direction",ATTRIBUTE_TYPE_VECTOR)
+	SPK_ATTRIBUTE("rotation speed",ATTRIBUTE_TYPE_FLOAT)
+	SPK_ATTRIBUTE("attraction speed",ATTRIBUTE_TYPE_FLOAT)
+	SPK_ATTRIBUTE("angular speed enabled",ATTRIBUTE_TYPE_BOOL)
+	SPK_ATTRIBUTE("linear speed enabled",ATTRIBUTE_TYPE_BOOL)
+	SPK_ATTRIBUTE("eye radius",ATTRIBUTE_TYPE_FLOAT)
+	SPK_ATTRIBUTE("killing particles enabled",ATTRIBUTE_TYPE_BOOL)
+	SPK_END_DESCRIPTION
+
 	public :
 
 		/**
@@ -139,9 +153,7 @@ namespace SPK
 		* @param rotationSpeed : the speed of rotation (either in units per unit of time or in radians per unit of time dependent on the second parameter)
 		* @param angular :  true to have the rotation in radians per unit of time, false to have it in unit per unit of time.
 		*/
-		void setRotationSpeed(float rotationSpeed, bool angular);
-		void setRotationSpeed(float rotationSpeed);
-		void setRotationSpeedAngular(bool a);
+		void setRotationSpeed(float rotationSpeed,bool angular);
 
 		/**
 		* @brief Gets the rotation speed
@@ -170,9 +182,7 @@ namespace SPK
 		* @param attractionSpeed : the attraction speed of the vortex in units per unit of time
 		* @param linear : true to set the speed function of the distance from the eye, false to set it constant
 		*/
-		void setAttractionSpeed(float attractionSpeed, bool linear);
-		void setAttractionSpeed(float attractionSpeed);
-		void setAttractionSpeedLinear(bool l);
+		void setAttractionSpeed(float attractionSpeed,bool linear);
 
 		/**
 		* @brief Gets the attraction speed
@@ -202,22 +212,12 @@ namespace SPK
 		*/
 		bool isParticleKillingEnabled() const;
 
-	public :
-		spark_description(Vortex, Modifier)
-		(
-			spk_attribute(Vector3D, position, setPosition, getPosition);
-			spk_attribute(Vector3D, direction, setDirection, getDirection);
-			spk_attribute(float, rotationSpeed, setRotationSpeed, getRotationSpeed);
-			spk_attribute(float, attractionSpeed, setAttractionSpeed, getAttractionSpeed);
-			spk_attribute(bool, angularRotationSpeed, setRotationSpeedAngular, isRotationSpeedAngular);
-			spk_attribute(bool, linearAttractionSpeed, setAttractionSpeedLinear, isAttractionSpeedLinear);
-			spk_attribute(float, eyeRadius, setEyeRadius, getEyeRadius);
-			spk_attribute(bool, killParticles, enableParticleKilling, isParticleKillingEnabled);
-		);
-
 	protected :
 
 		virtual void innerUpdateTransform();
+
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
 
 	private :
 
@@ -233,8 +233,8 @@ namespace SPK
 		bool angularSpeedEnabled;
 		bool linearSpeedEnabled;
 
-		float eyeRadius;
 		bool killingParticleEnabled;
+        float eyeRadius;
 
 		Vortex(const Vector3D& position = Vector3D(),const Vector3D& direction = Vector3D(0.0f,1.0f,0.0f),float rotationSpeed = 1.0f,float attractionSpeed = 0.0f);
 		Vortex(const Vortex& vortex);
@@ -286,20 +286,10 @@ namespace SPK
 		return eyeRadius;
 	}
 
-	inline void Vortex::setRotationSpeedAngular(bool a)
+	inline void Vortex::setRotationSpeed(float rotationSpeed,bool angular)
 	{
-		angularSpeedEnabled = a;
-	}
-
-	inline void Vortex::setRotationSpeed(float r, bool angular)
-	{
-		rotationSpeed = r;
+		this->rotationSpeed = rotationSpeed;
 		angularSpeedEnabled = angular;
-	}
-
-	inline void Vortex::setRotationSpeed(float r)
-	{
-		rotationSpeed = r;
 	}
 
 	inline float Vortex::getRotationSpeed() const
@@ -312,20 +302,10 @@ namespace SPK
 		return angularSpeedEnabled;
 	}
 
-	inline void Vortex::setAttractionSpeedLinear(bool l)
-	{
-		linearSpeedEnabled = l;
-	}
-
 	inline void Vortex::setAttractionSpeed(float attractionSpeed,bool linear)
 	{
 		this->attractionSpeed = attractionSpeed;
 		linearSpeedEnabled = linear;
-	}
-
-	inline void Vortex::setAttractionSpeed(float a)
-	{
-		attractionSpeed = a;
 	}
 
 	inline float Vortex::getAttractionSpeed() const

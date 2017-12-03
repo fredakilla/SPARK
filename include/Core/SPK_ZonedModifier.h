@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -38,6 +38,13 @@ namespace SPK
 	/** @brief An abstract modifier with a zone attached to it */
 	class SPK_PREFIX ZonedModifier : public Modifier
 	{
+
+	SPK_START_DESCRIPTION
+	SPK_PARENT_ATTRIBUTES(Modifier)
+	SPK_ATTRIBUTE("zone",ATTRIBUTE_TYPE_REF)
+	SPK_ATTRIBUTE("zone test",ATTRIBUTE_TYPE_STRING)
+	SPK_END_DESCRIPTION
+
 	public :
 
 		/** Destructor of zonedModifier */
@@ -52,7 +59,7 @@ namespace SPK
 		* @param zone : the zone
 		* @param zoneTest : the zone test
 		*/
-		void setZone(const Ref<Zone>& zone, ZoneTest zoneTest);
+		void setZone(const Ref<Zone>& zone,ZoneTest zoneTest);
 
 		/**
 		* @brief Sets the zone
@@ -91,13 +98,6 @@ namespace SPK
 
 		virtual Ref<SPKObject> findByName(const std::string& name);
 
-	public :
-		spark_description(ZonedModifier, Modifier)
-		(
-			spk_attribute(Ref<Zone>, zone, setZone, getZone);
-			spk_attribute(ZoneTest, zoneTest, setZoneTest, getZoneTest);
-		);
-
 	protected :
 
 		static const unsigned int ZONE_TEST_FLAG_ALL = 0xFFFFFFFF;	/**< Enables all zone tests */
@@ -130,6 +130,9 @@ namespace SPK
 
 		virtual void propagateUpdateTransform();
 
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
+
 	private :
 
 		static const size_t NB_ZONE_TESTS = 6;
@@ -139,7 +142,7 @@ namespace SPK
 		ZoneTest zoneTest;
 	};
 
-	inline void ZonedModifier::setZone(const Ref<Zone>& zone, ZoneTest zoneTest)
+	inline void ZonedModifier::setZone(const Ref<Zone>& zone,ZoneTest zoneTest)
 	{
 		setZone(zone);
 		setZoneTest(zoneTest);

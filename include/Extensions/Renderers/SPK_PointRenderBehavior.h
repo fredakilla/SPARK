@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -126,8 +126,8 @@ namespace SPK
 
 	inline PointRenderBehavior::PointRenderBehavior(PointType type,float screenSize) :
 		type(type),
-		screenSize(screenSize),
-		worldSize(false)
+        worldSize(false),
+        screenSize(screenSize)
 	{}
 
 	inline bool PointRenderBehavior::setType(PointType type)

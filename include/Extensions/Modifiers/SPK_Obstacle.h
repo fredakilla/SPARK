@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -26,6 +26,14 @@ namespace SPK
 {
 	class SPK_PREFIX Obstacle : public ZonedModifier
 	{
+	SPK_IMPLEMENT_OBJECT(Obstacle)
+
+	SPK_START_DESCRIPTION
+	SPK_PARENT_ATTRIBUTES(ZonedModifier)
+	SPK_ATTRIBUTE("bouncing ratio",ATTRIBUTE_TYPE_FLOAT)
+	SPK_ATTRIBUTE("friction",ATTRIBUTE_TYPE_FLOAT)
+	SPK_END_DESCRIPTION
+
 	public :
 
 		static  Ref<Obstacle> create(
@@ -72,12 +80,10 @@ namespace SPK
 		*/
 		float getFriction() const;
 
-	public :
-		spark_description(Obstacle, ZonedModifier)
-		(
-			spk_attribute(float, bouncingRatio, setBouncingRatio, getBouncingRatio);
-			spk_attribute(float, friction, setFriction, getFriction);
-		);
+	protected :
+
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
 
 	private :
 

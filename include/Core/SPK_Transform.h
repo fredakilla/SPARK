@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -26,7 +26,6 @@ namespace SPK
 {
     class Transformable;
 
-	/// TODO: Improve this in order to be able to use the w of vectors
 	/**
 	* @class Transform
 	* @brief an abstract class that allows matrix transformations
@@ -341,7 +340,7 @@ namespace SPK
 		*
 		* @param parent : the parent node of this Transform or NULL
 		*/
-		void update(const Ref<Transformable>& parent, Transformable& owner);
+		void update(const Ref<Transformable>& parent,Transformable& owner);
 
 		static void multiply(
 			float* dest,
@@ -357,7 +356,7 @@ namespace SPK
 			Vector3D& dest,
 			const Vector3D& v,
 			const float* m);
-	};
+    };
 
 	inline const float* Transform::getLocal() const
 	{

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -22,10 +22,6 @@
 #ifndef H_SPK_MEMORYTRACER
 #define H_SPK_MEMORYTRACER
 
-#ifdef _DEBUG
-#define SPK_TRACE_MEMORY
-#endif
-
 #ifndef SPK_TRACE_MEMORY
 #define SPK_NEW(name,...) new name(__VA_ARGS__)
 #define SPK_NEW_ARRAY(name,nb) new name[nb]
@@ -44,70 +40,70 @@
 
 namespace SPK
 {
-	// Note: don't forget to verify static objects that depends on the tracer.
-	// For the moment, only SPKContext and IO::Manager depends on it
-	class SPK_PREFIX SPKMemoryTracer
-	{
-	struct BlockInfo;
+    // Note: don't forget to verify static objects that depends on the tracer.
+    // For the moment, only SPKContext and IO::Manager depends on it
+    class SPK_PREFIX SPKMemoryTracer
+    {
+    struct BlockInfo;
 
-	friend bool operator==(const BlockInfo&,const BlockInfo&);
-	friend bool operator<(const BlockInfo&,const BlockInfo&);
-	friend bool compareAllocTime(const BlockInfo&,const BlockInfo&);
+    friend bool operator==(const BlockInfo&,const BlockInfo&);
+    friend bool operator<(const BlockInfo&,const BlockInfo&);
+    friend bool compareAllocTime(const BlockInfo&,const BlockInfo&);
 
-	public :
+    public :
 
-		static SPKMemoryTracer& get();
+        static SPKMemoryTracer& get();
 
-		void* registerAllocation(void* position, size_t size, const std::string& type, const std::string& file, size_t line);
-		void unregisterAllocation(void* position);
-		std::string formatSize(unsigned int s);
-		void dumpMemory();
+        void* registerAllocation(void* position, size_t size, const std::string& type, const std::string& file, size_t line);
+        void unregisterAllocation(void* position);
+        std::string formatSize(unsigned int s);
+        void dumpMemory();
 
-	private :
+    private :
 
-		struct BlockInfo
-		{
-			void* position;
-			size_t size;
-			std::string type;
-			std::string fileName;
-			size_t lineNb;
-			float time;
-			unsigned long index;
+        struct BlockInfo
+        {
+            void* position;
+            size_t size;
+            std::string type;
+            std::string fileName;
+            size_t lineNb;
+            float time;
+            unsigned long index;
 
-			BlockInfo(void* position) : position(position) {}
-		};
+            BlockInfo(void* position) : position(position) {}
+        };
 
-		SPKMemoryTracer() :
-			nextIndex(0),
-			totalMemorySize(0),
-			maxMemorySize(0)
-		{}
+        SPKMemoryTracer() :
+            nextIndex(0),
+            totalMemorySize(0),
+            maxMemorySize(0)
+        {}
 
-		SPKMemoryTracer(const SPKMemoryTracer&); // Not used
-		SPKMemoryTracer& operator=(const SPKMemoryTracer&); // Not used
+        SPKMemoryTracer(const SPKMemoryTracer&); // Not used
+        SPKMemoryTracer& operator=(const SPKMemoryTracer&); // Not used
 
-		unsigned long nextIndex;
-		unsigned long totalMemorySize;
-		unsigned long maxMemorySize;
+        unsigned long nextIndex;
+        unsigned long totalMemorySize;
+        unsigned long maxMemorySize;
 
-		std::set<BlockInfo> blocks;
-	};
+        std::set<BlockInfo> blocks;
+    };
 
-	inline bool operator==(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
-	{
-		return block0.position == block1.position;
-	}
+    inline bool operator==(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
+    {
+        return block0.position == block1.position;
+    }
 
-	inline bool operator<(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
-	{
-		return block0.position < block1.position;
-	}
+    inline bool operator<(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
+    {
+        return block0.position < block1.position;
+    }
 
-	inline bool compareAllocTime(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
-	{
-		return block0.index < block1.index;
-	}
+    inline bool compareAllocTime(const SPKMemoryTracer::BlockInfo& block0,const SPKMemoryTracer::BlockInfo& block1)
+    {
+        return block0.index < block1.index;
+    }
 }
 #endif
 #endif

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -35,9 +35,9 @@ namespace SPK
 	Octree::Octree(const Ref<Group>& group) :
 		group(*group),
 		cells(64),
-		nbCells(0),
-		nbParticles(0),
+		nbCells(0),		
 		particleCells(NULL),
+        nbParticles(0),
 		minPos(NULL),
 		maxPos(NULL)
 	{}

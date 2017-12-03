@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -23,7 +23,7 @@
 #define H_SPARK
 
 // Core
-#include <SPARK_Core.h>
+#include "SPARK_Core.h"
 
 // Interpolators
 #include "Extensions/Interpolators/SPK_DefaultInitializer.h"

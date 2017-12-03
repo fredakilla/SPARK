@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -165,9 +165,9 @@ namespace SPK
 	}
 
 	inline DataSet::DataSet() :
+        dataArray(NULL),
 		nbData(0),
-		initialized(false),
-		dataArray(NULL)
+        initialized(false)
 	{}
 
 	inline DataSet::~DataSet()

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 #include <SPARK_Core.h>
-#include <cstring>
+#include <cstring> // for memcpy
 
 namespace SPK
 {
@@ -35,9 +35,9 @@ namespace SPK
 	Transform::Transform() :
 		currentUpdate(0),
 		lastUpdate(0),
-		lastParentUpdate(0),
-		parent(NULL),
-		localIdentity(true)
+		lastParentUpdate(0),		
+        localIdentity(true),
+        parent(NULL)
 	{
 		std::memcpy(local,IDENTITY,sizeof(float) * TRANSFORM_LENGTH);
 		std::memcpy(world,IDENTITY,sizeof(float) * TRANSFORM_LENGTH);
@@ -46,9 +46,9 @@ namespace SPK
 	Transform::Transform(const Transform& transform) :
 		currentUpdate(0),
 		lastUpdate(0),
-		lastParentUpdate(0),
-		parent(NULL),
-		localIdentity(transform.localIdentity)
+		lastParentUpdate(0),		
+        localIdentity(transform.localIdentity),
+        parent(NULL)
 	{
 		std::memcpy(local,transform.local,sizeof(float) * TRANSFORM_LENGTH);
 		std::memcpy(world,transform.local,sizeof(float) * TRANSFORM_LENGTH); // Sets to local as it is created with no parent
@@ -73,22 +73,22 @@ namespace SPK
 		notifyForUpdate();
 	}
 
-	void Transform::set(const float* transform)
-	{
-		std::memcpy(local,transform,sizeof(float) * TRANSFORM_LENGTH);
-		localIdentity = false;
-		notifyForUpdate();
-	}
+    void Transform::set(const float* transform)
+    {
+        std::memcpy(local,transform,sizeof(float) * TRANSFORM_LENGTH);
+        localIdentity = false;
+        notifyForUpdate();
+    }
 
 	void Transform::setOrientationRH(Vector3D look,Vector3D up)
 	{
 		look.normalize();
 		up.normalize();
 
-		Vector3D side = crossProduct(look,up);
+        Vector3D side = crossProduct(up,look);
 		side.normalize();
 
-		up = crossProduct(side,look);
+        up = crossProduct(look,side);
 
 		local[0] = side.x;
 		local[1] = side.y;
@@ -108,10 +108,10 @@ namespace SPK
 	{
 		look.normalize();
 
-		Vector3D side = crossProduct(up, look);
+		Vector3D side = crossProduct(look,up);
 		side.normalize();
 
-		up = crossProduct(look, side);
+		up = crossProduct(side,look);
 
 		local[0] = side.x;
 		local[1] = side.y;
@@ -206,7 +206,7 @@ namespace SPK
 		notifyForUpdate();
 	}
 
-	void Transform::update(const Ref<Transformable>& parent, Transformable& owner)
+	void Transform::update(const Ref<Transformable>& parent,Transformable& owner)
 	{
 		if (isUpdateNotified() ||												// the local transform or instance param have been updated
 			parent != this->parent ||											// the parent has changed

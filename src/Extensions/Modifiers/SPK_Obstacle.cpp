@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -45,6 +45,10 @@ namespace SPK
 			if (checkZone(particle))
 				particle.kill(); // If the particle spawns inside a plain obstacle, it is killed
 			break;
+
+        default:
+            // do nothing.
+            break;
 		}
 	}
 
@@ -70,5 +74,23 @@ namespace SPK
 				velocity -= normal;
 			}
 		}
+	}
+
+	void Obstacle::innerImport(const IO::Descriptor& descriptor)
+	{
+		ZonedModifier::innerImport(descriptor);
+
+		const IO::Attribute* attrib = NULL;
+        if ((attrib = descriptor.getAttributeWithValue("bouncing ratio")))
+			setBouncingRatio(attrib->getValue<float>());
+        if ((attrib = descriptor.getAttributeWithValue("friction")))
+			setFriction(attrib->getValue<float>());
+	}
+
+	void Obstacle::innerExport(IO::Descriptor& descriptor) const
+	{
+		ZonedModifier::innerExport(descriptor);
+		descriptor.getAttribute("bouncing ratio")->setValue(getBouncingRatio());
+		descriptor.getAttribute("friction")->setValue(getFriction());
 	}
 }

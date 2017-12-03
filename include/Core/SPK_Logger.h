@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -74,14 +74,14 @@
 #else
 
 #ifdef _DEBUG
-#define SPK_LOG_DEBUG(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG, false) << entry << "\n"; SPK::Logger::get().flush();}
+#define SPK_LOG_DEBUG(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG) << entry << "\n"; SPK::Logger::get().flush();}
 #else
 #define SPK_LOG_DEBUG(entry) {}
 #endif
-#define SPK_LOG_INFO(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_INFO, false) << entry << "\n"; SPK::Logger::get().flush();}
-#define SPK_LOG_WARNING(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_WARNING, false) << entry << "\n"; SPK::Logger::get().flush();}
-#define SPK_LOG_ERROR(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_ERROR, false) << entry << "\n"; SPK::Logger::get().flush();}
-#define SPK_LOG_FATAL(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_FATAL, false) << entry << "\n"; SPK::Logger::get().flush();}
+#define SPK_LOG_INFO(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_INFO) << entry << "\n"; SPK::Logger::get().flush();}
+#define SPK_LOG_WARNING(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_WARNING) << entry << "\n"; SPK::Logger::get().flush();}
+#define SPK_LOG_ERROR(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_ERROR) << entry << "\n"; SPK::Logger::get().flush();}
+#define SPK_LOG_FATAL(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_FATAL) << entry << "\n"; SPK::Logger::get().flush();}
 
 #define SPK_ASSERT(condition,text) \
 { \
@@ -220,7 +220,7 @@ namespace SPK
 		* @param skipPrefix : false to add a prefix to the stream, true not to
 		* @return : a stream object used to log on entries
 		*/
-		Stream getStream(LogPriority priority, bool skipPrefix = false);
+		Stream getStream(LogPriority priority,bool skipPrefix = false);
 
 		/**
 		* @brief Gets the prefix flag of the logger
@@ -252,7 +252,7 @@ namespace SPK
 
 		class Stream
 		{
-		friend Stream Logger::getStream(LogPriority, bool);
+		friend Stream Logger::getStream(LogPriority,bool);
 
 		public :
 
@@ -274,10 +274,11 @@ namespace SPK
 		static const size_t NB_PRIORITY_LEVELS = 5; // Number of priority levels
 		static const std::string PRIORITY_NAMES[NB_PRIORITY_LEVELS]; // Names of priority levels
 
-		std::ostream* innerStream;
+        bool enabled;
 		LogPriority priorityLevel;
+        std::ostream* innerStream;
 		int prefixFlag;
-		bool enabled;
+
 
 		// private constructor and destructor (singleton pattern)
 		Logger();
@@ -326,7 +327,7 @@ namespace SPK
 	
 	inline void Logger::addEntry(LogPriority priority,const std::string& entry)
 	{
-		getStream(priority, false) << entry.c_str() << "\n";
+		getStream(priority) << entry.c_str() << "\n";
 		flush();
 	}
 

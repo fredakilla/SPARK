@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // SPARK particle engine														//
-// Copyright (C) 2008-2013 - Julien Fryer - julienfryer@gmail.com				//
+// Copyright (C) 2008-2011 - Julien Fryer - julienfryer@gmail.com				//
 //																				//
 // This software is provided 'as-is', without any express or implied			//
 // warranty.  In no event will the authors be held liable for any damages		//
@@ -27,28 +27,28 @@ namespace SPK
 	template<typename T>
 	class SimpleInterpolator : public Interpolator<T>
 	{
-		typedef typename Arg<T>::type Tv;
-
-	public:
-
-		static  Ref<SimpleInterpolator<T> > create(Tv birthValue,Tv deathValue);
-
-		void setValues(Tv birth,Tv death);
-		Tv getBirthValue() const;
-		Tv getDeathValue() const;
+	SPK_DEFINE_OBJECT_TEMPLATE(SimpleInterpolator)
+	SPK_DEFINE_DESCRIPTION_TEMPLATE
 
 	public :
-		spark_description(SimpleInterpolator, Interpolator<T>)
-		(
-			spk_attribute(Pair<T>, values, setValues, getBirthValue, getDeathValue);
-		);
+
+		static  Ref<SimpleInterpolator<T> > create(const T& birthValue,const T& deathValue);
+
+		void setValues(const T& birth,const T& death);
+		const T& getBirthValue() const;
+		const T& getDeathValue() const;
+
+	protected :
+
+		virtual void innerImport(const IO::Descriptor& descriptor);
+		virtual void innerExport(IO::Descriptor& descriptor) const;
 
 	private :
 
 		T birthValue;
 		T deathValue;
 
-		SimpleInterpolator<T>(Tv birthValue = T(),Tv deathValue = T());
+		SimpleInterpolator<T>(const T& birthValue = T(),const T& deathValue = T());
 		SimpleInterpolator<T>(const SimpleInterpolator<T>& interpolator);
 
 		virtual void interpolate(T* data,Group& group,DataSet* dataSet) const;
@@ -58,11 +58,16 @@ namespace SPK
 	typedef SimpleInterpolator<Color> ColorSimpleInterpolator;
 	typedef SimpleInterpolator<float> FloatSimpleInterpolator;
 
-	spark_description_specialization( ColorSimpleInterpolator );
-	spark_description_specialization( FloatSimpleInterpolator );
+	SPK_IMPLEMENT_OBJECT_TEMPLATE(ColorSimpleInterpolator)
+	SPK_IMPLEMENT_OBJECT_TEMPLATE(FloatSimpleInterpolator)
+
+	SPK_START_DESCRIPTION_TEMPLATE(SimpleInterpolator<T>)
+	SPK_PARENT_ATTRIBUTES(Interpolator<T>)
+	SPK_ATTRIBUTE_ARRAY_GENERIC("values",T)
+	SPK_END_DESCRIPTION
 
 	template<typename T>
-	SimpleInterpolator<T>::SimpleInterpolator(Tv birthValue,Tv deathValue) :
+	SimpleInterpolator<T>::SimpleInterpolator(const T& birthValue,const T& deathValue) :
 		Interpolator<T>(false),
 		birthValue(birthValue),
 		deathValue(deathValue)
@@ -76,26 +81,26 @@ namespace SPK
 	{}
 
 	template<typename T>
-	inline Ref<SimpleInterpolator<T> > SimpleInterpolator<T>::create(Tv birthValue,Tv deathValue)
+	inline Ref<SimpleInterpolator<T> > SimpleInterpolator<T>::create(const T& birthValue,const T& deathValue)
 	{
 		return SPK_NEW(SimpleInterpolator<T>,birthValue,deathValue);
 	}
 
 	template<typename T>
-	inline void SimpleInterpolator<T>::setValues(Tv birth,Tv death)
+	inline void SimpleInterpolator<T>::setValues(const T& birth,const T& death)
 	{
 		this->birthValue = birth;
 		this->deathValue = death;
 	}
 
 	template<typename T>
-	inline typename SimpleInterpolator<T>::Tv SimpleInterpolator<T>::getBirthValue() const
+	inline const T& SimpleInterpolator<T>::getBirthValue() const
 	{
 		return birthValue;
 	}
 
 	template<typename T>
-	inline typename SimpleInterpolator<T>::Tv SimpleInterpolator<T>::getDeathValue() const
+	inline const T& SimpleInterpolator<T>::getDeathValue() const
 	{
 		return deathValue;
 	}
@@ -110,7 +115,31 @@ namespace SPK
 	void SimpleInterpolator<T>::interpolate(T* data,Group& group,DataSet* dataSet) const
 	{
 		for (GroupIterator particleIt(group); !particleIt.end(); ++particleIt)
-			interpolateParam(data[particleIt->getIndex()],deathValue,birthValue,particleIt->getEnergy());
+            this->interpolateParam(data[particleIt->getIndex()],deathValue,birthValue,particleIt->getEnergy());
+	}
+
+	template<typename T>
+	void SimpleInterpolator<T>::innerImport(const IO::Descriptor& descriptor)
+	{
+		Interpolator<T>::innerImport(descriptor);
+
+		const IO::Attribute* attrib = NULL;
+        if ((attrib = descriptor.getAttributeWithValue("values")))
+		{
+			std::vector<T> tmpValues = attrib->getValues<T>();
+			if (tmpValues.size() == 2)
+				setValues(tmpValues[0],tmpValues[1]);
+			else
+				SPK_LOG_ERROR("SimpleInterpolator<T>::innerImport(const IO::Descriptor&) - Wrong number of values : " << tmpValues.size());
+		}
+	}
+
+	template<typename T>
+	void SimpleInterpolator<T>::innerExport(IO::Descriptor& descriptor) const
+	{
+		Interpolator<T>::innerExport(descriptor);
+		T tmpValues[2] = {birthValue,deathValue};
+		descriptor.getAttribute("values")->setValues(tmpValues,2);
 	}
 }
 
