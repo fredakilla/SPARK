@@ -23,18 +23,18 @@
 #define H_SPARK_GL
 
 // Defines
-#include "Rendering/OpenGL/SPK_GL_DEF.h"
+#include "SPK_GL_DEF.h"
 
 // Buffer
-#include "Rendering/OpenGL/SPK_GL_Buffer.h"
+#include "SPK_GL_Buffer.h"
 
 // Mother Renderer
-#include "Rendering/OpenGL/SPK_GL_Renderer.h"
+#include "SPK_GL_Renderer.h"
 
 // Renderers
-#include "Rendering/OpenGL/SPK_GL_PointRenderer.h"
-#include "Rendering/OpenGL/SPK_GL_LineRenderer.h"
-#include "Rendering/OpenGL/SPK_GL_LineTrailRenderer.h"
-#include "Rendering/OpenGL/SPK_GL_QuadRenderer.h"
+#include "SPK_GL_PointRenderer.h"
+#include "SPK_GL_LineRenderer.h"
+#include "SPK_GL_LineTrailRenderer.h"
+#include "SPK_GL_QuadRenderer.h"
 
 #endif

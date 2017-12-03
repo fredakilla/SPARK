@@ -94,22 +94,23 @@ INCLUDEPATH += $${THIRDPARTY_DIR}/glew-2.1.0/include
 #--------------------------------------------------------------------
 
 HEADERS += \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_Buffer.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_DEF.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_LineRenderer.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_LineTrailRenderer.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_PointRenderer.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_QuadRenderer.h \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_Renderer.h
+    ../../../rendering/SPARK_OpenGL/SPARK_GL.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_Buffer.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_DEF.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_LineRenderer.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_LineTrailRenderer.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_PointRenderer.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_QuadRenderer.h \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_Renderer.h
 
 
 SOURCES += \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_Buffer.cpp \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_LineRenderer.cpp \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_LineTrailRenderer.cpp \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_PointRenderer.cpp \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_QuadRenderer.cpp \
-    ../../../rendering/Rendering/OpenGL/SPK_GL_Renderer.cpp
+    ../../../rendering/SPARK_OpenGL/SPK_GL_Buffer.cpp \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_LineRenderer.cpp \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_LineTrailRenderer.cpp \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_PointRenderer.cpp \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_QuadRenderer.cpp \
+    ../../../rendering/SPARK_OpenGL/SPK_GL_Renderer.cpp
 
 
 

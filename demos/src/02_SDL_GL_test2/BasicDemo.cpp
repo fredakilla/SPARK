@@ -15,7 +15,7 @@
 #include <GL/glu.h>
 
 #include <SPARK.h>
-#include <SPARK_GL.h>
+#include <SPARK_OpenGL/SPARK_GL.h>
 
 
 using namespace SPK;
