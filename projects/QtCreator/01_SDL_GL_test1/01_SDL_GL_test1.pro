@@ -3,23 +3,13 @@
 #--------------------------------------------------------------------
 
 win32:SDL2_DIR = ../../../demos/thirdparty/Windows/SDL2-2.0.7
+win32:GLEW_DIR = ../../../thirdparty/glew-2.1.0
 win32:SPARK_DIR = ../../../spark
 win32:SPARK_GL_DIR = ../../../rendering
-win32:GLEW_DIR = ../../../thirdparty/glew-2.1.0
 
 #--------------------------------------------------------------------
 # target
 #--------------------------------------------------------------------
-
-#TEMPLATE = app
-
-#CONFIG -= qt
-#CONFIG += console
-##CONFIG += windows
-#CONFIG += c++11
-#CONFIG -= debug_and_release
-#CONFIG -= debug_and_release_target
-
 
 TEMPLATE = app
 CONFIG += console c++11
@@ -27,8 +17,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG -= debug_and_release
 CONFIG -= debug_and_release_target
-
-
 
 #--------------------------------------------------------------------
 # output directory
@@ -58,12 +46,9 @@ unix:!macx: QMAKE_CXXFLAGS += -Wno-reorder
 #unix:!macx: QMAKE_CXXFLAGS += -Wfatal-errors
 #unix:!macx: QMAKE_CXXFLAGS += -m32
 
-
 CONFIG(debug,debug|release) {
     QMAKE_CXXFLAGS_RELEASE += -O0
 } else {
-    unix:!macx: QMAKE_CXXFLAGS += -Wno-strict-aliasing
-    win32:QMAKE_CXXFLAGS_RELEASE -= -Zc:strictStrings
     QMAKE_CXXFLAGS_RELEASE += -O3
 }
 
@@ -81,12 +66,10 @@ CONFIG(debug,debug|release) {
     DEFINES +=  \
 }
 
-
 #--------------------------------------------------------------------
 # REQUIRED libs
 # sudo apt-get install libfreetype6-dev libglew-dev libsdl2-dev libftgl-dev
 #--------------------------------------------------------------------
-
 
 #--------------------------------------------------------------------
 # libraries includes
@@ -94,13 +77,8 @@ CONFIG(debug,debug|release) {
 
 INCLUDEPATH += $${SDL2_DIR}/include
 INCLUDEPATH += $${SPARK_DIR}/include
-
 INCLUDEPATH += $${GLEW_DIR}/include
 INCLUDEPATH += $${SPARK_GL_DIR}
-#INCLUDEPATH += /usr/include/freetype2
-
-
-
 
 #--------------------------------------------------------------------
 # libraries link
@@ -112,10 +90,10 @@ LIBS += -L$${DESTDIR}   -lSpark_GL
 win32: LIBS += -L$${SDL2_DIR}/lib/x64   -lSDL2
 win32: LIBS += -L$${SDL2_DIR}/lib/x64   -lSDL2main
 
-unix:!macx: LIBS += -lGL -lGLU -lftgl -lfreetype -lGLEW -lSDL2
+win32:LIBS += kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib \
+              ole32.lib oleaut32.lib uuid.lib imm32.lib winmm.lib wsock32.lib opengl32.lib glu32.lib version.lib
 
-win32:LIBS +=  msvcrtd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib \
-                ole32.lib oleaut32.lib uuid.lib imm32.lib winmm.lib wsock32.lib opengl32.lib glu32.lib version.lib
+unix:!macx: LIBS += -lGL -lGLU -lftgl -lfreetype -lGLEW -lSDL2
 
 
 #--------------------------------------------------------------------
@@ -124,8 +102,8 @@ win32:LIBS +=  msvcrtd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi
 
 HEADERS += \
 
-
 SOURCES += \
     ../../../thirdparty/glew-2.1.0/src/glew.c \
-    ../../../demos/src/01_sdl_test/BasicDemo.cpp
+    ../../../demos/src/01_SDL_GL_test1/SPKTest.cpp \
+    ../../../thirdparty/PugiXml/pugixml.cpp
 

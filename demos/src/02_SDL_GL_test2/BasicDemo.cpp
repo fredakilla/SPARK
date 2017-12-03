@@ -782,8 +782,6 @@ int RunDemo()
 
         SPK::GL::GLRenderer::restoreGLStates();
 
-
-
         // Computes delta time
         clock_t currentTick = clock();
         deltaTime = (float)(currentTick - frameFPS.back()) / CLOCKS_PER_SEC;
