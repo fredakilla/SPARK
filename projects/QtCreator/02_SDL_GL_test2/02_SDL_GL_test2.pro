@@ -4,8 +4,8 @@
 
 win32:SDL2_DIR = ../../../demos/thirdparty/Windows/SDL2-2.0.7
 win32:GLEW_DIR = ../../../thirdparty/glew-2.1.0
-win32:SPARK_DIR = ../../../spark
-win32:SPARK_GL_DIR = ../../../rendering
+SPARK_DIR = ../../../spark
+SPARK_GL_DIR = ../../../rendering
 
 #--------------------------------------------------------------------
 # target
@@ -36,13 +36,13 @@ QMAKE_CLEAN += $$DESTDIR/$$TARGET
 unix:!macx: QMAKE_CXXFLAGS_WARN_ON -= -Wall
 unix:!macx: QMAKE_CFLAGS_WARN_ON -= -Wall
 unix:!macx: QMAKE_CXXFLAGS += -Wall
-unix:!macx: QMAKE_CXXFLAGS += -Wno-comment
-unix:!macx: QMAKE_CXXFLAGS += -Wno-ignored-qualifiers
+#unix:!macx: QMAKE_CXXFLAGS += -Wno-comment
+#unix:!macx: QMAKE_CXXFLAGS += -Wno-ignored-qualifiers
 unix:!macx: QMAKE_CXXFLAGS += -Wno-unused-parameter
 unix:!macx: QMAKE_CXXFLAGS += -std=c++11
-unix:!macx: QMAKE_CXXFLAGS += -fpermissive
-unix:!macx: QMAKE_CXXFLAGS += -Wno-unused-function
-unix:!macx: QMAKE_CXXFLAGS += -Wno-reorder
+#unix:!macx: QMAKE_CXXFLAGS += -fpermissive
+#unix:!macx: QMAKE_CXXFLAGS += -Wno-unused-function
+#unix:!macx: QMAKE_CXXFLAGS += -Wno-reorder
 #unix:!macx: QMAKE_CXXFLAGS += -Wfatal-errors
 #unix:!macx: QMAKE_CXXFLAGS += -m32
 
@@ -59,7 +59,7 @@ CONFIG(debug,debug|release) {
 CONFIG(debug,debug|release) {
     #debug
     DEFINES +=  \
-        SPK_GL_NO_EXT
+        #SPK_GL_NO_EXT
 
 } else {
     # release
@@ -68,24 +68,28 @@ CONFIG(debug,debug|release) {
 
 #--------------------------------------------------------------------
 # REQUIRED libs
-# sudo apt-get install libfreetype6-dev libglew-dev libsdl2-dev libftgl-dev
+# sudo apt-get install libglew-dev libsdl2-dev
 #--------------------------------------------------------------------
 
 #--------------------------------------------------------------------
 # libraries includes
 #--------------------------------------------------------------------
 
-INCLUDEPATH += $${SDL2_DIR}/include
+
+win32:      INCLUDEPATH += $${SDL2_DIR}/include
+win32:      INCLUDEPATH += $${GLEW_DIR}/include
+
+unix:!macx: INCLUDEPATH += /usr/include/SDL2
+
 INCLUDEPATH += $${SPARK_DIR}/include
-INCLUDEPATH += $${GLEW_DIR}/include
 INCLUDEPATH += $${SPARK_GL_DIR}
 
 #--------------------------------------------------------------------
 # libraries link
 #--------------------------------------------------------------------
 
-LIBS += -L$${DESTDIR}   -lSpark
 LIBS += -L$${DESTDIR}   -lSpark_GL
+LIBS += -L$${DESTDIR}   -lSpark
 
 win32: LIBS += -L$${SDL2_DIR}/lib/x64   -lSDL2
 win32: LIBS += -L$${SDL2_DIR}/lib/x64   -lSDL2main
@@ -100,9 +104,9 @@ unix:!macx: LIBS += -lGL -lGLU -lftgl -lfreetype -lGLEW -lSDL2
 # project files
 #--------------------------------------------------------------------
 
-HEADERS += \
+win32:SOURCES += ../../../thirdparty/glew-2.1.0/src/glew.c
 
 SOURCES += \
-    ../../../thirdparty/glew-2.1.0/src/glew.c \
     ../../../demos/src/02_SDL_GL_test2/BasicDemo.cpp
+    ../../../thirdparty/PugiXml/pugixml.cpp
 

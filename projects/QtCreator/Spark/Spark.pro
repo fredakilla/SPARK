@@ -1,21 +1,9 @@
 #--------------------------------------------------------------------
-# configuration
-#--------------------------------------------------------------------
-include(../config.pri)
-
-#--------------------------------------------------------------------
 # global var
 #--------------------------------------------------------------------
 
-unix:!macx:URHO3D = /home/fred/Documents/Urho3D/Source
-unix:!macx:SPARK = ../../Source/ThirdParty/Spark
-
-win32:SPARK_DIR = ../../../spark
-win32:THIRDPARTY_DIR = ../../../thirdparty
-#win32:URHO3D = C:\github\Urho3D\Source
-#win32:URHO3DBUILD = C:\github\Urho3D\BUILD
-
-
+SPARK_DIR = ../../../spark
+THIRDPARTY_DIR = ../../../thirdparty
 
 #--------------------------------------------------------------------
 # target
@@ -70,15 +58,12 @@ CONFIG(debug,debug|release) {
     #debug
     DEFINES +=  \
         #_DEBUG \
-        #SPK_WITH_XML \
-        #SPK_GL_NO_EXT \
-        #URHO3D_IS_BUILDING
+        #SPK_NO_XML \
 
 } else {
     # release
     DEFINES +=  \
-        #SPK_WITH_XML \
-        #URHO3D_IS_BUILDING \
+        #SPK_NO_XML \
 }
 
 #--------------------------------------------------------------------
@@ -87,11 +72,6 @@ CONFIG(debug,debug|release) {
 
 INCLUDEPATH += $${SPARK_DIR}/include
 INCLUDEPATH += $${THIRDPARTY_DIR}/PugiXml
-
-#!INCLUDEPATH += $${URHO3D}
-#INCLUDEPATH += $${URHO3D}/ThirdParty
-INCLUDEPATH += $${URHO3DBUILD}/include
-
 
 #--------------------------------------------------------------------
 # project files
@@ -168,16 +148,6 @@ HEADERS += \
     $${SPARK_DIR}/include/Extensions/Zones/SPK_Sphere.h \
     $${SPARK_DIR}/include/SPARK.h \
     $${SPARK_DIR}/include/SPARK_Core.h \
-    #$${SPARK_DIR}/include/SPARK_DX9.h \
-    #$${SPARK_DIR}/include/SPARK_GL.h \
-    #$${SPARK_DIR}/include/SPARK_IRR.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/SPK_Urho3D_DEF.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/SPK_Urho3D_Buffer.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/SPK_Urho3D_QuadRenderer.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/SPK_Urho3D_Renderer.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/UrhoSparkSystem.h \
-    #$${SPARK_DIR}/include/SPARK_URHO3D.h \
-    #$${SPARK_DIR}/include/Rendering/Urho3D/SparkParticleEffect.h \
 
 SOURCES += \
     $${SPARK_DIR}/src/Core/IO/SPK_IO_Buffer.cpp \
@@ -225,17 +195,5 @@ SOURCES += \
     $${SPARK_DIR}/src/Extensions/Zones/SPK_Plane.cpp \
     $${SPARK_DIR}/src/Extensions/Zones/SPK_Ring.cpp \
     $${SPARK_DIR}/src/Extensions/Zones/SPK_Sphere.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/SPK_Urho3D_DEF.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/SPK_Urho3D_Buffer.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/SPK_Urho3D_QuadRenderer.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/SPK_Urho3D_Renderer.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/UrhoSparkSystem.cpp \
-    #$${SPARK_DIR}/src/Rendering/Urho3D/SparkParticleEffect.cpp \
-
-
-
-
-
-
 
 

@@ -807,7 +807,7 @@ int RunDemo()
 }
 
 
-int SDL_main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     // Sets the update step
     System::setClampStep(true,0.1f);			// clamp the step to 100 ms

@@ -2,15 +2,8 @@
 # global var
 #--------------------------------------------------------------------
 
-unix:!macx:URHO3D = /home/fred/Documents/Urho3D/Source
-unix:!macx:SPARK = ../../Source/ThirdParty/Spark
-
-win32:SPARK_DIR = ../../../spark
-#win32:SPARK_GL_DIR = ../../../rendering
-win32:THIRDPARTY_DIR = ../../../thirdparty
-
-
-
+SPARK_DIR = ../../../spark
+THIRDPARTY_DIR = ../../../thirdparty
 
 #--------------------------------------------------------------------
 # target
@@ -64,17 +57,12 @@ CONFIG(debug,debug|release) {
 CONFIG(debug,debug|release) {
     #debug
     DEFINES +=  \
-        #SPK_GL_NO_EXT
         #_DEBUG \
-        #SPK_WITH_XML \
         #SPK_GL_NO_EXT \
-        #URHO3D_IS_BUILDING
 
 } else {
     # release
     DEFINES +=  \
-        #SPK_WITH_XML \
-        #URHO3D_IS_BUILDING \
 }
 
 #--------------------------------------------------------------------
@@ -82,11 +70,7 @@ CONFIG(debug,debug|release) {
 #--------------------------------------------------------------------
 
 INCLUDEPATH += $${SPARK_DIR}/include
-INCLUDEPATH += $${THIRDPARTY_DIR}/glew-2.1.0/include
-
-#!INCLUDEPATH += $${URHO3D}
-#INCLUDEPATH += $${URHO3D}/ThirdParty
-#INCLUDEPATH += $${URHO3DBUILD}/include
+win32:INCLUDEPATH += $${THIRDPARTY_DIR}/glew-2.1.0/include
 
 
 #--------------------------------------------------------------------
