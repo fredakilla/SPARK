@@ -3,5 +3,6 @@ demos/bin/*.exp
 demos/bin/*.ilk
 demos/bin/*.lib
 demos/bin/*.pdb
+demos/bin/*.a
 
 *.pro.user
