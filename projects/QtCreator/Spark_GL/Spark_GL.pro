@@ -57,7 +57,6 @@ CONFIG(debug,debug|release) {
 CONFIG(debug,debug|release) {
     #debug
     DEFINES +=  \
-        #_DEBUG \
         #SPK_GL_NO_EXT \
 
 } else {

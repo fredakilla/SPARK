@@ -39,7 +39,7 @@ namespace SPK
 
 	Logger::Logger() :
 		enabled(true),
-#ifdef _DEBUG
+#ifdef SPK_DEBUG
 		priorityLevel(LOG_PRIORITY_DEBUG), // default priority level is DEBUG in debug
 #else
 		priorityLevel(LOG_PRIORITY_INFO), // default priority level is INFO in release

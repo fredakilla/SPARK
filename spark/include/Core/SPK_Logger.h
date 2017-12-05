@@ -69,11 +69,11 @@
 #define SPK_LOG_WARNING(entry) {}
 #define SPK_LOG_ERROR(entry) {}
 #define SPK_LOG_FATAL(entry) {}
-#define SPK_ASSERT(condition,text) {assert(condition)}
+#define SPK_ASSERT(condition,text) { assert(condition); }
 
 #else
 
-#ifdef _DEBUG
+#ifdef SPK_DEBUG
 #define SPK_LOG_DEBUG(entry) {SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG) << entry << "\n"; SPK::Logger::get().flush();}
 #else
 #define SPK_LOG_DEBUG(entry) {}
