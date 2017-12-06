@@ -56,8 +56,9 @@ namespace IO
 		void unregisterSaver(const std::string& ext);
 		Saver* getSaver(const std::string& ext) const;
 
-		Ref<System> load(const std::string& path) const;
+        Ref<System> load(const std::string& path) const;
 		Ref<System> load(const std::string& ext,std::istream& is) const;
+        Ref<System> loadFromBuffer(const std::string& ext, char * data, unsigned int size) const;
 
 		bool save(const std::string& path,const Ref<System>& system) const;
 		bool save(const std::string& ext,std::ostream& os,const Ref<System>& system) const;

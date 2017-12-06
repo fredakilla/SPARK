@@ -66,6 +66,25 @@ namespace IO
 		}
 	}
 
+    Ref<System> Loader::loadFromBuffer(const char * data, unsigned int datasize)
+    {
+        clock_t startTime = std::clock();
+
+        Graph graph;
+        if (innerLoadFromBuffer(graph,data,datasize))
+        {
+            const Ref<System>& system = graph.finalize();
+            unsigned int loadTime = static_cast<unsigned int>(((std::clock() - startTime) * 1000) / CLOCKS_PER_SEC);
+            SPK_LOG_INFO("The system has been successfully loaded in " << loadTime << "ms");
+            return system;
+        }
+        else
+        {
+            SPK_LOG_INFO("An error occurred while loading the System");
+            return SPK_NULL_REF;
+        }
+    }
+
 	Loader::Node::Node(const Ref<SPKObject>& object) :
 		object(object),
 		descriptor(object->createDescriptor())

@@ -82,6 +82,51 @@ namespace IO
 		return true;
 	}
 
+    bool XMLLoader::innerLoadFromBuffer(Graph& graph, const char * data, unsigned int datasize)
+    {
+        pugi::xml_document doc;
+        pugi::xml_parse_result result = doc.load_buffer(data, datasize);
+
+        if (!result)
+        {
+            SPK_LOG_ERROR("XMLLoader::innerLoad(std::istream&,Graph&) - Error while parsing XML : " << result.description() << " at character " << result.offset);
+            return false;
+        }
+
+        const pugi::xml_node& root = doc.document_element();
+        if (!root || std::string("SPARK") != root.name())
+        {
+            SPK_LOG_ERROR("XMLLoader::innerLoad(std::istream&,Graph&) - The root element is not conform (must be <SPARK>)");
+            return false;
+        }
+
+        // Iterates in XML to find the objects and fill the graph
+        std::vector<pugi::xml_node> objElements; // This will allow to find back objects description once created
+        std::map<int,size_t> ref2Index; // This map allows to find back objects index in the vector from their reference id
+
+        findObjects(root,objElements,ref2Index,true);
+        for (size_t i = 0; i < objElements.size(); ++i)
+            graph.addNode(i,std::string(objElements[i].name()));
+
+        if (!graph.validateNodes())
+            return false;
+
+        // Fills up descriptors
+        for (size_t i = 0; i < objElements.size(); ++i)
+        {
+            const pugi::xml_node& element = objElements[i];
+
+            Node* node = graph.getNode(i);
+            if (node != NULL)
+            {
+                Descriptor& desc = node->getDescriptor();
+                parseAttributes(element,desc,graph,objElements,ref2Index);
+            }
+        }
+
+        return true;
+    }
+
 	const std::string XMLLoader::getValue(const pugi::xml_node& element) const
 	{
 		pugi::xml_attribute attr = element.attribute("value");

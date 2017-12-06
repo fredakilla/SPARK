@@ -53,6 +53,20 @@ namespace IO
 		registeredSavers.clear();
 	}
 
+    Ref<System> IOManager::loadFromBuffer(const std::string& ext, char * data, unsigned int size) const
+    {
+        std::string name = formatExtension(ext);
+        Loader* loader = getLoader(name);
+
+        if (loader == NULL)
+        {
+            SPK_LOG_ERROR("IOManager::loadFromData(const std::string& ext, char * data, unsigned int size) - The extension " << name << " is not known");
+            return SPK_NULL_REF;
+        }
+
+        return loader->loadFromBuffer(data, size);
+    }
+
 	Ref<System> IOManager::load(const std::string& path) const
 	{
 		std::string name = getExtension(path);

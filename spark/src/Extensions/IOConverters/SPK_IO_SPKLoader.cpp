@@ -34,6 +34,12 @@ namespace IO
 	const size_t SPKLoader::DATA_LENGTH_OFFSET = 4;
 	const size_t SPKLoader::HEADER_LENGTH = 12;
 
+    bool SPKLoader::innerLoadFromBuffer(Graph& graph, const char * data, unsigned int datasize)
+    {
+        // Not implemented.
+        return false;
+    }
+
     bool SPKLoader::innerLoad(std::istream& is, Graph& graph, const std::string &path) const
 	{
 		// Check header

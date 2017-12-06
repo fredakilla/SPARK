@@ -61,6 +61,14 @@ namespace IO
 		*/
 		Ref<System> load(const std::string& path) const;
 
+        /**
+        * @brief Loads a system from a data buffer
+        * @param data : the data buffer that contains data to parse
+        * @param datasize : the data buffer size
+        * @return the loaded system or NULL if loading failed
+        */
+        Ref<System> loadFromBuffer(const char * data, unsigned int datasize);
+
 		////////////////////
 		// nested classes //
 		////////////////////
@@ -122,6 +130,15 @@ namespace IO
 		* @return true if the loading was successful, false if it failed
 		*/
         virtual bool innerLoad(std::istream& is,Graph& graph,const std::string& path=0) const = 0;
+
+        /**
+        * @brief The inner load buffer method to be implemented in derived classes
+        * @param graph : the graph that allows to build the system
+        * @param data : the data buffer
+        * @param datasize : the data buffer size
+        * @return true if the loading was successful, false if it failed
+        */
+        virtual bool innerLoadFromBuffer(Graph& graph, const char * data, unsigned int datasize) = 0;
 	};
 }}
 
