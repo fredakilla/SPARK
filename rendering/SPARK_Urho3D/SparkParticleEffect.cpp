@@ -51,23 +51,18 @@ void SparkParticleEffect::RegisterObject(Context* context)
 bool SparkParticleEffect::BeginLoad(Deserializer& source)
 {
     String extension = GetExtension(source.GetName());
+    extension.Erase(0,1); // erase dot in extension
 
-    bool success = false;
+    unsigned dataSize = source.GetSize();
+    SharedArrayPtr<char> data(new char[dataSize]);
+    source.Read(data.Get(), dataSize);
 
-    if (extension == ".spk")
-    {
-        // Check ID
-        String fileID = source.ReadFileID();
-        if (fileID != "SPK")
-        {
-            URHO3D_LOGERROR(source.GetName() + " is not a valid spk file");
-            return false;
-        }
-    }
+    loadedSystem_ = SPK::IO::IOManager::get().loadFromBuffer(extension.CString(), data, dataSize);
 
-    success = BeginLoadSPK(source);
-    if (success)
+    if(loadedSystem_)
         return true;
+    else
+        URHO3D_LOGERROR(source.GetName() + " unable to load spark effect from file : " + source.GetName());
 
     return false;
 }
@@ -80,49 +75,6 @@ bool SparkParticleEffect::EndLoad()
     }
 
     return true;
-}
-
-bool SparkParticleEffect::BeginLoadSPK(Deserializer& source)
-{
-    // Spark has is own serialisation system, used to load and save .xml or .spk files effects.
-    // To use it inside Urho3D resources directories, we need to prefix filenames.
-
-    // Get relative file path prefixed with resource dir or empty if not exists
-    String fixedPath = GetFixedPath();
-
-    // if file exists, load file from spark IO
-    if(fixedPath != String::EMPTY)
-    {
-        loadedSystem_ = SPK::IO::IOManager::get().load(fixedPath.CString());
-
-        if(loadedSystem_)
-            return true;
-    }
-    else
-    {
-        // file not found.
-        URHO3D_LOGERROR(source.GetName() + " not found. Path = : " + fixedPath);
-    }
-
-    return false;
-}
-
-String SparkParticleEffect::GetFixedPath()
-{
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-
-    for(unsigned i=0; i<cache->GetResourceDirs().Size(); ++i)
-    {
-        String dir = cache->GetResourceDirs()[i];
-        String path = dir + GetName();
-
-        if(GetSubsystem<FileSystem>()->FileExists(path))
-        {
-            return path;
-        }
-    }
-
-    return String::EMPTY;
 }
 
 bool SparkParticleEffect::Save(const String& filename) const

@@ -56,8 +56,6 @@ public:
     /// Save resource. Return true if successful.
     bool Save(const String &filename) const;
 
-    /// Helper function for loading SPK files.
-    bool BeginLoadSPK(Deserializer& source);
     /// Get Spark particle system loaded
     const SPK::Ref<SPK::System> GetSystem() const;
     /// Clone the particle system.
@@ -65,10 +63,6 @@ public:
 
     /// Manually set spark particle system
     void SetSystem(SPK::Ref<SPK::System> spkSystem);
-
-private:
-    /// Search file in Urho3D resources directories and return file path prefixed with resource dir or return empty string if not exists
-    String GetFixedPath();
 
 private:
     /// loaded spark particle system
