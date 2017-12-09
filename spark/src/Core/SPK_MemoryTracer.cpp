@@ -23,6 +23,42 @@
 
 #include "Core/SPK_DEF.h"
 
+#if _win32
+    #define ALIGN16_MALLOC(__data, __size)      __data = _aligned_malloc(__size, 16)
+    #define ALIGN16_FREE(__data)                _aligned_free(__data)
+#else
+    #define ALIGN16_MALLOC(__data, __size)      posix_memalign((void**)&__data,16,__size)
+    #define ALIGN16_FREE(__data)                free(__data)
+#endif
+
+void * operator new(size_t size)
+{
+    void * p;
+    ALIGN16_MALLOC(p, size);
+    if (p == NULL) throw std::bad_alloc();
+    return p;
+}
+
+void operator delete(void *p)
+{
+    ALIGN16_FREE(p);
+}
+
+void * operator new[](size_t size)
+{
+    void * p;
+    ALIGN16_MALLOC(p, size);
+    if (p == NULL) throw std::bad_alloc();
+    return p;
+}
+
+void operator delete[](void *p)
+{
+    ALIGN16_FREE(p);
+}
+
+
+
 #ifdef SPK_TRACE_MEMORY
 
 #include <ctime>

@@ -24,6 +24,15 @@
 #ifndef H_SPK_MEMORYTRACER
 #define H_SPK_MEMORYTRACER
 
+#undef new
+#undef delete
+
+void * operator new(size_t);
+void * operator new[](size_t size);
+void operator delete(void*) noexcept;
+void operator delete[](void*) noexcept;
+
+
 #ifndef SPK_TRACE_MEMORY
 #define SPK_NEW(name,...) new name(__VA_ARGS__)
 #define SPK_NEW_ARRAY(name,nb) new name[nb]
