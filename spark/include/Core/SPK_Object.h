@@ -256,7 +256,7 @@ namespace SPK
 		}
 
 		ref->copyBuffer = new std::map<SPKObject*,SPKObject*>(); // Creates the copy buffer to allow correct copy of underlying SPARK objects
-		Ref<T> clone = dynamicCast<T>(dynamicCast<SPKObject>(ref)->clone());
+        Ref<T> clone = staticCast<T>(staticCast<SPKObject>(ref)->clone());
 		delete ref->copyBuffer; // Deletes the copy buffer used for the copy
 		ref->copyBuffer = NULL;
 		return clone;
@@ -282,11 +282,11 @@ namespace SPK
 			return dynamic_cast<T*>(it->second);
 
 		ref->copyBuffer = copyBuffer; // Sets the copyBuffer of the child to the copyBuffer of the parent
-		Ref<SPKObject> clone = dynamicCast<SPKObject>(ref)->clone();
+        Ref<SPKObject> clone = staticCast<SPKObject>(ref)->clone();
 		ref->copyBuffer = NULL; // Removes the reference to the copy buffer (the copy buffer is deleted by the top level copied object)
 
 		copyBuffer->insert(std::make_pair(ref.get(),clone.get()));
-		return dynamicCast<T>(clone);
+        return staticCast<T>(clone);
 	}
 }
 

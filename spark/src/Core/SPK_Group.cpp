@@ -972,7 +972,7 @@ namespace SPK
 		{
 			const std::vector<Ref<Modifier> >& tmpModifiers = attrib->getValuesRef<Modifier>();
 			for (size_t i = 0; i < tmpModifiers.size(); ++i)
-				addModifier(dynamicCast<Modifier>(tmpModifiers[i]));
+                addModifier(tmpModifiers[i]);
 		}
 
         if ((attrib = descriptor.getAttributeWithValue("birth action")))

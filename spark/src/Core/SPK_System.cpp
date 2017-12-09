@@ -261,8 +261,8 @@ namespace SPK
         if ((attrib = descriptor.getAttributeWithValue("groups")))
 		{
 			const std::vector<Ref<Group> >& tmpGroups = attrib->getValuesRef<Group>();
-			for (size_t i = 0; i < tmpGroups.size(); ++i)
-				groups.push_back(tmpGroups[i]);
+            for (size_t i = 0; i < tmpGroups.size(); ++i)
+                addGroup(tmpGroups[i]);
 		}
 	}
 

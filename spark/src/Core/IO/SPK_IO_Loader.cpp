@@ -127,9 +127,10 @@ namespace IO
 		size_t nbSystems = 0;
 		for (std::list<Node*>::const_iterator it = nodes.begin(); it != nodes.end(); ++it)
 		{
-			Ref<System> systemRef = dynamicCast<System>((*it)->object);
-			if (systemRef)
+            Ref<SPKObject> objectRef = staticCast<SPKObject>((*it)->object);
+            if (objectRef && objectRef->getClassName() == "System")
 			{
+                Ref<System> systemRef = staticCast<System>((*it)->object);
 				system = systemRef;
 				++nbSystems;
 			}

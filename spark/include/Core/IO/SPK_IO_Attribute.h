@@ -193,7 +193,7 @@ namespace IO
 		valueSet = true;
 		this->optional = optional;
 
-#if !defined(SPK_NO_LOG) && defined(_DEBUG)
+#if !defined(SPK_NO_LOG) && defined(SPK_DEBUG)
 		Logger::Stream os = SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG);
 		os << "Set " << nb << " values for attribute \"" << name << "\" : ";
 		for (size_t i = 0; i < nb; ++i)
@@ -225,7 +225,7 @@ namespace IO
 		for (size_t i = 0; i < nb; ++i)
 			tmpBuffer.push_back(*reinterpret_cast<T*>(&descriptor->buffer[offset + sizeof(size_t) + i * sizeof(T)]));
 
-#if !defined(SPK_NO_LOG) && defined(_DEBUG)
+#if !defined(SPK_NO_LOG) && defined(SPK_DEBUG)
 		Logger::Stream os = SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG);
 		os << "Get " << nb << " values for attribute \"" << name << "\" : ";
 		for (size_t i = 0; i < nb; ++i)
@@ -264,7 +264,7 @@ namespace IO
 
 		SPK_LOG_DEBUG("Get value for attribute \"" << name << "\" : " << descriptor->refBuffer[*reinterpret_cast<size_t*>(&descriptor->buffer[offset])]);
 
-		return dynamicCast<T>(descriptor->refBuffer[*reinterpret_cast<size_t*>(&descriptor->buffer[offset])]);
+        return staticCast<T>(descriptor->refBuffer[*reinterpret_cast<size_t*>(&descriptor->buffer[offset])]);
 	}
 
 	template<typename T>
@@ -286,7 +286,7 @@ namespace IO
 		valueSet = true;
 		this->optional = optional;
 
-#if !defined(SPK_NO_LOG) && defined(_DEBUG)
+#if !defined(SPK_NO_LOG) && defined(SPK_DEBUG)
 		Logger::Stream os = SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG);
 		os << "Set " << nb << " values for attribute \"" << name << "\" : ";
 		for (size_t i = 0; i < nb; ++i)
@@ -306,9 +306,9 @@ namespace IO
 		size_t refOffset = *reinterpret_cast<size_t*>(&descriptor->buffer[offset + sizeof(size_t)]);
 		std::vector<Ref<T> > tmpBuffer;
 		for (size_t i = 0; i < nb; ++i)
-			tmpBuffer.push_back(dynamicCast<T>(descriptor->refBuffer[refOffset + i]));
+            tmpBuffer.push_back(staticCast<T>(descriptor->refBuffer[refOffset + i]));
 
-#if !defined(SPK_NO_LOG) && defined(_DEBUG)
+#if !defined(SPK_NO_LOG) && defined(SPK_DEBUG)
 		Logger::Stream os = SPK::Logger::get().getStream(SPK::LOG_PRIORITY_DEBUG);
 		os << "Get " << nb << " values for attribute \"" << name << "\" : ";
 		for (size_t i = 0; i < nb; ++i)

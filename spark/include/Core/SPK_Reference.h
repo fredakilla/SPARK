@@ -153,6 +153,7 @@ namespace SPK
 	template<typename T> std::ostream& operator<<(std::ostream& s,const Ref<T>& ref) { return s << ref.get(); }
 
     template<typename T,typename U> Ref<T> dynamicCast(const Ref<U>& ref) { return Ref<T>(dynamic_cast<T*>(ref.get())); }
+    template<typename T,typename U> Ref<T> staticCast(const Ref<U>& ref) { return Ref<T>(static_cast<T*>(ref.get())); }
 }
 
 #endif
