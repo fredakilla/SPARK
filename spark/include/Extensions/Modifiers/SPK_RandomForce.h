@@ -129,10 +129,10 @@ namespace SPK
 
 	protected :
 
-		virtual void innerUpdateTransform();
+		virtual void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -160,10 +160,10 @@ namespace SPK
 		void advanceTime(const Particle& particle,DataSet* dataSet,float deltaTime,float& time) const;
 		void initParticle(const Particle& particle,DataSet* dataSet) const;
 
-		virtual void createData(DataSet& dataSet,const Group& group) const;
+		virtual void createData(DataSet& dataSet,const Group& group) const override;
 
-		virtual void init(Particle& particle,DataSet* dataSet) const;
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void init(Particle& particle,DataSet* dataSet) const override;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<RandomForce> RandomForce::create(const Vector3D& minVector,const Vector3D& maxVector,float minPeriod,float maxPeriod)

@@ -98,7 +98,7 @@ namespace SPK
 		// Virtual interface //
 		///////////////////////
 
-		virtual Ref<SPKObject> findByName(const std::string& name);
+		virtual Ref<SPKObject> findByName(const std::string& name) override;
 
 	protected :
 
@@ -130,10 +130,10 @@ namespace SPK
 		*/
 		bool checkZone(const Particle& particle,Vector3D* normal = NULL) const;
 
-		virtual void propagateUpdateTransform();
+        virtual void propagateUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 

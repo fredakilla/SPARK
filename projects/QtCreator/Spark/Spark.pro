@@ -34,6 +34,7 @@ QMAKE_CLEAN += $$DESTDIR/$$TARGET
 unix:!macx: QMAKE_CXXFLAGS_WARN_ON -= -Wall
 unix:!macx: QMAKE_CFLAGS_WARN_ON -= -Wall
 unix:!macx: QMAKE_CXXFLAGS += -Wall
+unix:!macx: QMAKE_CXXFLAGS += -Wextra
 #unix:!macx: QMAKE_CXXFLAGS += -Wno-comment
 #unix:!macx: QMAKE_CXXFLAGS += -Wno-ignored-qualifiers
 unix:!macx: QMAKE_CXXFLAGS += -Wno-unused-parameter
@@ -42,6 +43,7 @@ unix:!macx: QMAKE_CXXFLAGS += -std=c++11
 #unix:!macx: QMAKE_CXXFLAGS += -Wno-unused-function
 #unix:!macx: QMAKE_CXXFLAGS += -Wno-reorder
 #unix:!macx: QMAKE_CXXFLAGS += -Wfatal-errors
+unix:!macx: QMAKE_CXXFLAGS += -Wsuggest-override
 #unix:!macx: QMAKE_CXXFLAGS += -m32
 
 CONFIG(debug,debug|release) {

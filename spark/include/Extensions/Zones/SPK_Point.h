@@ -34,10 +34,10 @@ namespace SPK
 
 		static Ref<Point> create(const Vector3D& position = Vector3D());
 
-		virtual void generatePosition(Vector3D& v,bool full,float radius = 0.0f) const;
-		virtual bool contains(const Vector3D& v,float radius = 0.0f) const;
-		virtual bool intersects(const Vector3D& v0,const Vector3D& v1,float radius = 0.0f,Vector3D* normal = NULL) const;
-		virtual Vector3D computeNormal(const Vector3D& v) const;
+		virtual void generatePosition(Vector3D& v,bool full,float radius = 0.0f) const override;
+		virtual bool contains(const Vector3D& v,float radius = 0.0f) const override;
+		virtual bool intersects(const Vector3D& v0,const Vector3D& v1,float radius = 0.0f,Vector3D* normal = NULL) const override;
+		virtual Vector3D computeNormal(const Vector3D& v) const override;
 
 	private :
 

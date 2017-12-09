@@ -108,7 +108,7 @@ namespace SPK
 
 		~ArrayData<T>();
 
-		virtual void swap(size_t index0,size_t index1);
+        virtual void swap(size_t index0,size_t index1) override;
 	};
 
 	typedef ArrayData<float>	FloatArrayData;		/**< @brief ArrayData holding floats */
@@ -179,7 +179,7 @@ namespace SPK
 	}
 
 	template<typename T>
-	inline void ArrayData<T>::swap(size_t index0,size_t index1)
+    inline void ArrayData<T>::swap(size_t index0,size_t index1)
 	{
 		index0 *= sizePerParticle;
 		index1 *= sizePerParticle;

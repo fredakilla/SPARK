@@ -391,12 +391,12 @@ namespace SPK
 		// Virtual interface //
 		///////////////////////
 
-		virtual Ref<SPKObject> findByName(const std::string& name);
+		virtual Ref<SPKObject> findByName(const std::string& name) override;
 	
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -596,7 +596,7 @@ namespace SPK
 		void detachDataSet(DataSet* dataHandler);
 
 		void sortParticles(int start,int end);
-		virtual void propagateUpdateTransform();
+		virtual void propagateUpdateTransform() override;
 
 		void sortParticles();
 		void computeAABB();

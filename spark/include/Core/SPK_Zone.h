@@ -97,11 +97,11 @@ namespace SPK
 
 		Zone(const Vector3D& position = Vector3D());
 
-		virtual  void innerUpdateTransform();
+        virtual void innerUpdateTransform() override;
 		static  void normalizeOrRandomize(Vector3D& v);
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+        virtual void innerImport(const IO::Descriptor& descriptor) override;
+        virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 

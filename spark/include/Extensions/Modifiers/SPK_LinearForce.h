@@ -295,10 +295,10 @@ namespace SPK
 
 	protected :
 
-		virtual  void innerUpdateTransform();
+		virtual  void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -321,7 +321,7 @@ namespace SPK
 	
 		float getDiscreteFactor(const Particle& particle) const;
 		
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<LinearForce> LinearForce::create(const Vector3D& value,const Ref<Zone>& zone,ZoneTest zoneTest)

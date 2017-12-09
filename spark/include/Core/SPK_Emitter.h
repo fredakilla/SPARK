@@ -213,7 +213,7 @@ namespace SPK
 		*/
 		bool isFullZone() const;
 
-		virtual Ref<SPKObject> findByName(const std::string& name);
+        virtual Ref<SPKObject> findByName(const std::string& name) override;
 
 	protected :
 
@@ -226,10 +226,10 @@ namespace SPK
 
 		Emitter(const Emitter& emitter);
 
-		virtual void propagateUpdateTransform();
+        virtual void propagateUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+        virtual void innerImport(const IO::Descriptor& descriptor) override;
+        virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 

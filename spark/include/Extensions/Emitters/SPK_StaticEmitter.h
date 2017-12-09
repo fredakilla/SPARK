@@ -56,7 +56,7 @@ namespace SPK
 
 		StaticEmitter(const StaticEmitter& emitter);
 
-		virtual  void generateVelocity(Particle& particle,float speed) const;
+        virtual  void generateVelocity(Particle& particle,float speed) const override;
 	};
 
 	inline StaticEmitter::StaticEmitter(const Ref<Zone>& zone,bool full,int tank,float flow) :

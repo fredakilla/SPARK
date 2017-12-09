@@ -54,7 +54,7 @@ namespace SPK
 		Rotator();
 		Rotator(const Rotator& rotator);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+        virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Rotator::Rotator() :

@@ -144,13 +144,13 @@ namespace SPK
 		/** @brief Resets the pool of particles */
 		void resetPool();
 
-		virtual void apply(Particle& particle) const;
-		virtual Ref<SPKObject> findByName(const std::string& name);
+		virtual void apply(Particle& particle) const override;
+		virtual Ref<SPKObject> findByName(const std::string& name) override;
 
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 

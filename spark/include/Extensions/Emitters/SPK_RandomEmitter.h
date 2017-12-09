@@ -60,7 +60,7 @@ namespace SPK
 
 		RandomEmitter(const RandomEmitter& emitter);
 
-		virtual void generateVelocity(Particle& particle,float speed) const;
+        virtual void generateVelocity(Particle& particle,float speed) const override;
 	};
 
 	inline RandomEmitter::RandomEmitter(const Ref<Zone>& zone,bool full,int tank,float flow,float forceMin,float forceMax) :

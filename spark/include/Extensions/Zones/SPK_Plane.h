@@ -92,17 +92,17 @@ namespace SPK
 		// Interface //
 		///////////////
 
-		virtual void generatePosition(Vector3D& v,bool full,float radius = 0.0f) const;
-		virtual bool contains(const Vector3D& v,float radius = 0.0f) const;
-		virtual bool intersects(const Vector3D& v0,const Vector3D& v1,float radius = 0.0f,Vector3D* normal = NULL) const;
-		virtual Vector3D computeNormal(const Vector3D& v) const;
+		virtual void generatePosition(Vector3D& v,bool full,float radius = 0.0f) const override;
+		virtual bool contains(const Vector3D& v,float radius = 0.0f) const override;
+		virtual bool intersects(const Vector3D& v0,const Vector3D& v1,float radius = 0.0f,Vector3D* normal = NULL) const override;
+		virtual Vector3D computeNormal(const Vector3D& v) const override;
 
 	protected :
 
-		virtual void innerUpdateTransform();
+		virtual void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 

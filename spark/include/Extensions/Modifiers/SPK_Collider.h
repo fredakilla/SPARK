@@ -91,8 +91,8 @@ namespace SPK
 
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -101,7 +101,7 @@ namespace SPK
 		Collider(float elasticity = 1.0f);
 		Collider(const Collider& collider);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Collider::Collider(float elasticity) :

@@ -120,10 +120,10 @@ namespace SPK
 
 	protected :
 
-		virtual void innerUpdateTransform();
+		virtual void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -163,7 +163,7 @@ namespace SPK
 
 		SphericEmitter(const SphericEmitter& emitter);
 
-		virtual void generateVelocity(Particle& particle,float speed) const;
+        virtual void generateVelocity(Particle& particle,float speed) const override;
 
 		void computeMatrix();
 	};

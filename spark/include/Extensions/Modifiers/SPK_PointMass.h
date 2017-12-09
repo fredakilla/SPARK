@@ -122,10 +122,10 @@ namespace SPK
 
 	protected :
 
-		virtual  void innerUpdateTransform();
+        virtual  void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -138,7 +138,7 @@ namespace SPK
 		PointMass(const Vector3D& pos = Vector3D(),float mass = 1.0f,float offset = 0.01f);
 		PointMass(const PointMass& pointMass);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<PointMass> PointMass::create(const Vector3D& pos,float mass,float offset)

@@ -62,11 +62,11 @@ namespace SPK
 
 	protected :
 
-		virtual void createData(DataSet& dataSet,const Group& group) const;
-		virtual void checkData(DataSet& dataSet,const Group& group) const;
+        virtual void createData(DataSet& dataSet,const Group& group) const override;
+        virtual void checkData(DataSet& dataSet,const Group& group) const override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -95,7 +95,7 @@ namespace SPK
 
 			~EmitterData();
 
-			virtual void swap(size_t index0,size_t index1);
+            virtual void swap(size_t index0,size_t index1) override;
 		};
 
 		Ref<Emitter> baseEmitter;
@@ -116,8 +116,8 @@ namespace SPK
 
 		void initData(EmitterData& data,const Group& group) const;
 
-		virtual void init(Particle& particle,DataSet* dataSet) const;
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void init(Particle& particle,DataSet* dataSet) const override;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<EmitterAttacher> EmitterAttacher::create(

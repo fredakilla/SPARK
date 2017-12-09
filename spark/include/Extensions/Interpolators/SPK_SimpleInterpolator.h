@@ -42,8 +42,8 @@ namespace SPK
 
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -53,8 +53,8 @@ namespace SPK
 		SimpleInterpolator<T>(const T& birthValue = T(),const T& deathValue = T());
 		SimpleInterpolator<T>(const SimpleInterpolator<T>& interpolator);
 
-		virtual void interpolate(T* data,Group& group,DataSet* dataSet) const;
-		virtual  void init(T& data,Particle& particle,DataSet* dataSet) const;
+        virtual void interpolate(T* data,Group& group,DataSet* dataSet) const override;
+        virtual  void init(T& data,Particle& particle,DataSet* dataSet) const override;
 	};
 
 	typedef SimpleInterpolator<Color> ColorSimpleInterpolator;

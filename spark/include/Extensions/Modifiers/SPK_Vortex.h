@@ -216,10 +216,10 @@ namespace SPK
 
 	protected :
 
-		virtual void innerUpdateTransform();
+		virtual void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -241,7 +241,7 @@ namespace SPK
 		Vortex(const Vector3D& position = Vector3D(),const Vector3D& direction = Vector3D(0.0f,1.0f,0.0f),float rotationSpeed = 1.0f,float attractionSpeed = 0.0f);
 		Vortex(const Vortex& vortex);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<Vortex> Vortex::create(const Vector3D& position,const Vector3D& direction,float rotationSpeed,float attractionSpeed)

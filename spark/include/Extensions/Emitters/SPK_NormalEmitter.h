@@ -94,14 +94,14 @@ namespace SPK
 		// Herited //
 		/////////////
 
-		virtual Ref<SPKObject> findByName(const std::string& name);
+		virtual Ref<SPKObject> findByName(const std::string& name) override;
 
 	protected :
 
-		virtual void propagateUpdateTransform();
+		virtual void propagateUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :	
 
@@ -120,7 +120,7 @@ namespace SPK
 
 		NormalEmitter(const NormalEmitter& emitter);
 
-		virtual void generateVelocity(Particle& particle,float speed) const;
+        virtual void generateVelocity(Particle& particle,float speed) const override;
 	};
 
 	inline Ref<NormalEmitter> NormalEmitter::create(

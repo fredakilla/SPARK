@@ -30,7 +30,7 @@
 #define SPK_START_DESCRIPTION \
 \
 protected : \
-virtual void fillAttributeList(std::vector<IO::Attribute>& attributes) const \
+virtual void fillAttributeList(std::vector<IO::Attribute>& attributes) const override \
 {
 
 #define SPK_PARENT_ATTRIBUTES(ParentName)	ParentName::fillAttributeList(attributes);
@@ -47,12 +47,12 @@ friend class SPK::IO::IOManager; \
 template<typename T> friend class SPK::Ref; \
 static std::string asName()								{ return #ClassName; } \
 static SPK::Ref<SPK::SPKObject> createSerializable()	{ return SPK_NEW(ClassName); } \
-virtual SPK::Ref<SPK::SPKObject> clone() const			{ return SPK_NEW(ClassName,*this); } \
+virtual SPK::Ref<SPK::SPKObject> clone() const override	{ return SPK_NEW(ClassName,*this); } \
 public : \
-virtual std::string getClassName() const				{ return ClassName::asName(); }
+virtual std::string getClassName() const override		{ return ClassName::asName(); }
 
 // For templates
-#define SPK_DEFINE_DESCRIPTION_TEMPLATE	protected : void fillAttributeList(std::vector<SPK::IO::Attribute>& attributes) const;
+#define SPK_DEFINE_DESCRIPTION_TEMPLATE	protected : void fillAttributeList(std::vector<SPK::IO::Attribute>& attributes) const override;
 #define SPK_START_DESCRIPTION_TEMPLATE(ClassName) \
 template<typename T> inline void ClassName::fillAttributeList(std::vector<SPK::IO::Attribute>& attributes) const \
 {
@@ -63,9 +63,9 @@ friend class SPK::IO::IOManager; \
 template<typename U> friend class SPK::Ref; \
 static std::string asName(); \
 static SPK::Ref<SPK::SPKObject> createSerializable()		{ return SPK_NEW(ClassName); } \
-virtual SPK::Ref<SPK::SPKObject> clone() const				{ return SPK_NEW(ClassName,*this); } \
+virtual SPK::Ref<SPK::SPKObject> clone() const override		{ return SPK_NEW(ClassName,*this); } \
 public : \
-virtual std::string getClassName() const					{ return ClassName::asName(); }
+virtual std::string getClassName() const override			{ return ClassName::asName(); }
 
 #define SPK_IMPLEMENT_OBJECT_TEMPLATE(ClassName) \
 template<> inline std::string ClassName::asName() { return #ClassName; }
@@ -82,8 +82,15 @@ namespace SPK
 
 	namespace IO { class IOManager; }
 
+
+    class SPK_PREFIX SPKObjectMeta
+    {
+    public:
+        virtual void fillAttributeList(std::vector<IO::Attribute>& attributes) const = 0;
+    };
+
 	/** @brief The base class of all SPARK objects */
-	class SPK_PREFIX SPKObject
+    class SPK_PREFIX SPKObject : public SPKObjectMeta
 	{
 	template<typename T> friend class Ref;
 
@@ -155,7 +162,7 @@ namespace SPK
 		* @param name : the name of the object to find
 		* @return : the object with the given name or null
 		*/
-		virtual Ref<SPKObject> findByName(const std::string& name);
+        virtual Ref<SPKObject> findByName(const std::string& name);
 
 		///////////////////
 		// Serialization //
@@ -193,8 +200,8 @@ namespace SPK
 		SPKObject(SharePolicy SHARE_POLICY = SHARE_POLICY_CUSTOM);
 		SPKObject(const SPKObject& obj);
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+        virtual void innerImport(const IO::Descriptor& descriptor);
+        virtual void innerExport(IO::Descriptor& descriptor) const;
 
 		template<typename T>
 		Ref<T> copyChild(const Ref<T>& ref) const;

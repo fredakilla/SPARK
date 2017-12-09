@@ -46,8 +46,8 @@ namespace SPK
 		Destroyer(const Ref<Zone>& zone = SPK_NULL_REF,ZoneTest zoneTest = ZONE_TEST_INSIDE);
 		Destroyer(const Destroyer& destroyer);
 
-		virtual void init(Particle& particle,DataSet* dataSet) const;
-		virtual  void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+        virtual void init(Particle& particle,DataSet* dataSet) const override;
+        virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<Destroyer> Destroyer::create(const Ref<Zone>& zone,ZoneTest zoneTest)

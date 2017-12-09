@@ -137,8 +137,8 @@ namespace GL
 
 	protected :
 
-		virtual void createData(DataSet& dataSet,const Group& group) const;
-		virtual void checkData(DataSet& dataSet,const Group& group) const;
+		virtual void createData(DataSet& dataSet,const Group& group) const override;
+		virtual void checkData(DataSet& dataSet,const Group& group) const override;
 
 	private :
 

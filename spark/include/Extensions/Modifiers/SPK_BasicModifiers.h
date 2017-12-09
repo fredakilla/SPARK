@@ -45,10 +45,10 @@ namespace SPK
 
 	protected :
 
-		virtual  void innerUpdateTransform();
+        virtual  void innerUpdateTransform() override;
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -58,7 +58,7 @@ namespace SPK
 		Gravity(const Vector3D& value = Vector3D());
 		Gravity(const Gravity& gravity);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+        virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	class SPK_PREFIX Friction : public Modifier
@@ -78,15 +78,15 @@ namespace SPK
 
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
 		Friction(float value = 0.0f);
 		Friction(const Friction& friction);
 
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+        virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Gravity::Gravity(const Vector3D& value) :

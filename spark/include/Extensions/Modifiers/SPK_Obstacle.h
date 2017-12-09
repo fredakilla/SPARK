@@ -84,8 +84,8 @@ namespace SPK
 
 	protected :
 
-		virtual void innerImport(const IO::Descriptor& descriptor);
-		virtual void innerExport(IO::Descriptor& descriptor) const;
+		virtual void innerImport(const IO::Descriptor& descriptor) override;
+		virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 	private :
 
@@ -100,8 +100,8 @@ namespace SPK
 
 		Obstacle(const Obstacle& obstacle);
 
-		virtual void init(Particle& particle,DataSet* dataSet) const;
-		virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const;
+        virtual void init(Particle& particle,DataSet* dataSet) const override;
+        virtual void modify(Group& group,DataSet* dataSet,float deltaTime) const override;
 	};
 
 	inline Ref<Obstacle> Obstacle::create(const Ref<Zone>& zone,float bouncingRatio,float friction,ZoneTest zoneTest)
