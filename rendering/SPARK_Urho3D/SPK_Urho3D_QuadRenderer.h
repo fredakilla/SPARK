@@ -55,8 +55,8 @@ public:
 
 
 protected:
-    virtual void innerImport(const IO::Descriptor& descriptor);
-    virtual void innerExport(IO::Descriptor& descriptor) const;
+    virtual void innerImport(const IO::Descriptor& descriptor) override;
+    virtual void innerExport(IO::Descriptor& descriptor) const override;
 
 private:
 
