@@ -58,8 +58,6 @@ public:
 
     /// Get Spark particle system loaded
     const SPK::Ref<SPK::System> GetSystem() const;
-    /// Clone the particle system.
-    SharedPtr<SparkParticleEffect> Clone(const String& cloneName = String::EMPTY) const;
 
     /// Manually set spark particle system
     void SetSystem(SPK::Ref<SPK::System> spkSystem);

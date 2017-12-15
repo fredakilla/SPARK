@@ -92,11 +92,6 @@ const SPK::Ref<SPK::System> SparkParticleEffect::GetSystem() const
     return loadedSystem_;
 }
 
-SharedPtr<SparkParticleEffect> SparkParticleEffect::Clone(const String& cloneName) const
-{
-    return 0;
-}
-
 void SparkParticleEffect::SetSystem(SPK::Ref<SPK::System> spkSystem)
 {
     loadedSystem_ = spkSystem;
