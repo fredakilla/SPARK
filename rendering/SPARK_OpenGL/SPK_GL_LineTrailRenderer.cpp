@@ -39,10 +39,10 @@ namespace GL
 
 	GLLineTrailRenderer::GLLineTrailRenderer(const GLLineTrailRenderer& renderer) :
 		GLRenderer(renderer),
+        nbSamples(renderer.nbSamples),
 		width(renderer.width),
-		degeneratedColor(renderer.degeneratedColor),
-		nbSamples(renderer.nbSamples),
-		duration(renderer.duration)
+        duration(renderer.duration),
+        degeneratedColor(renderer.degeneratedColor)
 	{}
 
 	void GLLineTrailRenderer::setNbSamples(size_t nbSamples)
