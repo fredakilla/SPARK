@@ -180,7 +180,7 @@ namespace IO
     inline std::string ToString(const Color& v)
     {
         std::ostringstream ss;
-        ss << v.r << " " << v.g << " " << v.b << " " << v.a;
+        ss << v.getRGBA();
         return ss.str();
     }
 
@@ -189,9 +189,9 @@ namespace IO
     inline Color FromString(const std::string& str)
     {
         std::istringstream ss(str);
-        Color ret;
-        ss >> ret.r >> ret.g >> ret.b >> ret.a;
-        return ret;
+        uint32 rgba;
+        ss >> rgba;
+        return Color(rgba);
     }
 
     //-----------------------------------------------------------
