@@ -23,6 +23,8 @@
 
 #include "Core/SPK_DEF.h"
 
+
+#ifdef SPK_OVERRIDE_NEW
 #if _win32
     #define ALIGN16_MALLOC(__data, __size)      __data = _aligned_malloc(__size, 16)
     #define ALIGN16_FREE(__data)                _aligned_free(__data)
@@ -56,8 +58,7 @@ void operator delete[](void *p)
 {
     ALIGN16_FREE(p);
 }
-
-
+#endif
 
 #ifdef SPK_TRACE_MEMORY
 

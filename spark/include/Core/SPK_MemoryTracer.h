@@ -24,6 +24,7 @@
 #ifndef H_SPK_MEMORYTRACER
 #define H_SPK_MEMORYTRACER
 
+#ifdef SPK_OVERRIDE_NEW
 #undef new
 #undef delete
 
@@ -31,6 +32,7 @@ void * operator new(size_t);
 void * operator new[](size_t size);
 void operator delete(void*) noexcept;
 void operator delete[](void*) noexcept;
+#endif
 
 
 #ifndef SPK_TRACE_MEMORY
