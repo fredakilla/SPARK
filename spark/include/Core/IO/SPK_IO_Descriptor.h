@@ -136,8 +136,10 @@ namespace IO
 		Descriptor(const std::vector<Attribute>& attributes); // Constructor only accessible by SPKObject
 
 		std::vector<Attribute> attributes;		
-		std::vector<char> buffer; // An internal buffer is used to limit memory allocation of attribute values
+        //std::vector<char> buffer; // An internal buffer is used to limit memory allocation of attribute values
 		std::vector<Ref<SPKObject> > refBuffer; // An internal buffer of reference to keep strong reference
+
+        std::vector<std::vector<std::string> > buffer;
 
 		uint32 signature;
 
