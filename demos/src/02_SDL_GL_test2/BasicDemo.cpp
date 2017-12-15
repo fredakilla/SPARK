@@ -729,10 +729,6 @@ int RunDemo()
 
         if (!paused)
         {
-            float t = deltaTime * 100000;
-            //SPK::Ref<SPK::SphericEmitter> emiter = system->getGroup(0)->getEmitter(0);
-            //emiter->setDirection(SPK::Vector3D(sin(t),1,cos(t)));
-
             // update fountain system
             system->updateParticles(deltaTime);
 
