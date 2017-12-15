@@ -97,7 +97,7 @@ win32: LIBS += -L$${SDL2_DIR}/lib/x64   -lSDL2main
 win32:LIBS += kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib \
               ole32.lib oleaut32.lib uuid.lib imm32.lib winmm.lib wsock32.lib opengl32.lib glu32.lib version.lib
 
-unix:!macx: LIBS += -lGL -lGLU -lftgl -lfreetype -lGLEW -lSDL2
+unix:!macx: LIBS += -lGL -lGLU -lGLEW -lSDL2
 
 
 #--------------------------------------------------------------------

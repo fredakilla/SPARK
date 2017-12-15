@@ -59,7 +59,7 @@ CONFIG(debug,debug|release) {
 CONFIG(debug,debug|release) {
     #debug
     DEFINES +=  \
-        #SPK_DEBUG \
+        SPK_DEBUG \
         #SPK_NO_LOG \
         #SPK_TRACE_MEMORY \
         #SPK_NO_XML
